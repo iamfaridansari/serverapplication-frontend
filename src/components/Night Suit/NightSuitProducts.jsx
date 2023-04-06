@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import { category, colors, fabric } from "../../assets/data/nightsuitdata";
 import { FaPen, FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 
 const NightSuitProducts = () => {
+  const { backendAPI } = useContext(AppContext);
   const [product, setProduct] = useState({
     name: "",
     category: "",
@@ -50,7 +52,7 @@ const NightSuitProducts = () => {
       formData.append("image3", image3);
       formData.append("image4", image4);
       //
-      const res = await fetch("/api/post/nightsuit/products", {
+      const res = await fetch(backendAPI + "/api/post/nightsuit/products", {
         method: "POST",
         body: formData,
       });
@@ -74,7 +76,7 @@ const NightSuitProducts = () => {
   //
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
-    const res = await fetch("/api/get/nightsuit/products");
+    const res = await fetch(backendAPI + "/api/get/nightsuit/products");
     const data = await res.json();
     console.log(data);
     //
@@ -87,7 +89,7 @@ const NightSuitProducts = () => {
   }, []);
   //
   const deleteimage = async (item) => {
-    const res = await fetch("/api/delete/nightsuit/products", {
+    const res = await fetch(backendAPI + "/api/delete/nightsuit/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -264,10 +266,7 @@ const NightSuitProducts = () => {
                   </button>
                 </div>
               </div>
-              <img
-                src={`http://localhost:3001/${item.images[0].path}`}
-                alt=""
-              />
+              <img src={`${backendAPI + "/" + item.images[0].path}`} alt="" />
             </div>
           );
         })}

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import { FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 
 const SaybaGroupForm = () => {
+  const { backendAPI } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const fetchMessages = async () => {
-    const res = await fetch("http://localhost:3001/api/get/sayba/form");
+    const res = await fetch(`${backendAPI}/api/get/sayba/form`);
     const data = await res.json();
     console.log(data);
     //
@@ -18,7 +20,7 @@ const SaybaGroupForm = () => {
   }, []);
   //
   const deleteMessage = async (id) => {
-    const res = await fetch("http://localhost:3001/api/delete/sayba/form", {
+    const res = await fetch(`${backendAPI}/api/delete/sayba/form`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

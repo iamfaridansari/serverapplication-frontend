@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import {
   brand,
   category,
@@ -8,6 +9,7 @@ import { FaPen, FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 
 const FaridsClosetProducts = () => {
+  const { backendAPI } = useContext(AppContext);
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -48,10 +50,13 @@ const FaridsClosetProducts = () => {
       window.alert("Enter complete details");
     } else {
       try {
-        const res = await fetch("/api/post/faridscloset/products", {
-          method: "POST",
-          body: formData,
-        });
+        const res = await fetch(
+          backendAPI + "/api/post/faridscloset/products",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
         const data = await res.json();
         console.log(data);
         if (res.status === 200) {
@@ -73,7 +78,7 @@ const FaridsClosetProducts = () => {
   //
   const [products, setProducts] = useState([]);
   const getfaridsclosetproducts = async () => {
-    const res = await fetch("/api/get/faridscloset/products");
+    const res = await fetch(backendAPI + "/api/get/faridscloset/products");
     const data = await res.json();
     console.log(data);
     //
@@ -86,7 +91,7 @@ const FaridsClosetProducts = () => {
   }, []);
   //
   const deleteimage = async (item) => {
-    const res = await fetch("/api/delete/faridscloset/products", {
+    const res = await fetch(backendAPI + "/api/delete/faridscloset/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -240,7 +245,7 @@ const FaridsClosetProducts = () => {
                   </button>
                 </div>
               </div>
-              <img src={`http://localhost:3001/${item.image}`} alt="" />
+              <img src={`${backendAPI + "/" + item.image}`} alt="" />
             </div>
           );
         })}

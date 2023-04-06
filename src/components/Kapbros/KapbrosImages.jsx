@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import ToggleMenu from "../ToggleMenu";
 
 const KapbrosImages = () => {
+  const { backendAPI } = useContext(AppContext);
   const [image, setImage] = useState("");
   const [images, setImages] = useState([]);
   //
@@ -14,7 +16,7 @@ const KapbrosImages = () => {
       const formData = new FormData();
       formData.append("image", image);
       try {
-        const res = await fetch("/api/post/kapbros/products", {
+        const res = await fetch(`${backendAPI}/api/post/kapbros/products`, {
           method: "POST",
           body: formData,
         });
@@ -28,7 +30,7 @@ const KapbrosImages = () => {
   };
   //
   const getkapbrosimages = async () => {
-    const res = await fetch("/api/get/kapbros/products");
+    const res = await fetch(`${backendAPI}/api/get/kapbros/products`);
     const data = await res.json();
     console.log(data);
     if (res.status === 200) {
@@ -40,7 +42,7 @@ const KapbrosImages = () => {
   }, []);
   //
   const deleteimage = async (item) => {
-    const res = await fetch("/api/delete/kapbros/products", {
+    const res = await fetch(`${backendAPI}/api/delete/kapbros/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +76,7 @@ const KapbrosImages = () => {
         {images.map((item, index) => {
           return (
             <img
-              src={`http://localhost:3001/${item.image}`}
+              src={`${backendAPI + "/" + item.image}`}
               key={index}
               onDoubleClick={() => deleteimage(item)}
               alt=""

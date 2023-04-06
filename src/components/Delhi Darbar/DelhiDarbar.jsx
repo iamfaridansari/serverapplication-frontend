@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import { FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 
 const DelhiDarbarForm = () => {
+  const { backendAPI } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const fetchMessages = async () => {
-    const res = await fetch("/api/get/delhidarbar/form");
+    const res = await fetch(`${backendAPI}/api/get/delhidarbar/form`);
     const data = await res.json();
     console.log(data);
     //
@@ -18,7 +20,7 @@ const DelhiDarbarForm = () => {
   }, []);
   //
   const deleteForm = async (id) => {
-    console.log(id);
+    console.log(id)
   };
   return (
     <div className="container-fluid p-lg-2 p-0">

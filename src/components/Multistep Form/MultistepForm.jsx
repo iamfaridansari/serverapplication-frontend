@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import { FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 
 const MultistepForm = () => {
+  const { backendAPI } = useContext(AppContext);
   const [forms, setForms] = useState([]);
   const fetchData = async () => {
     try {
-      const res = await fetch("/api/get/multistepform/form");
+      const res = await fetch(backendAPI + "/api/get/multistepform/form");
       const data = await res.json();
       console.log(data);
       //
@@ -22,7 +24,7 @@ const MultistepForm = () => {
   }, []);
   const deleteForm = async (id) => {
     try {
-      const res = await fetch("/api/delete/multistepform/form", {
+      const res = await fetch(backendAPI + "/api/delete/multistepform/form", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
