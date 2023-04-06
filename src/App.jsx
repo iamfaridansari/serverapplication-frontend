@@ -14,6 +14,7 @@ import SaybaGroupForm from "./components/Sayba Group/SaybaGroupForm";
 import DelhiDarbarForm from "./components/Delhi Darbar/DelhiDarbar";
 import { AppContextProvider } from "./context/AppContext";
 import MultistepForm from "./components/Multistep Form/MultistepForm";
+import SaybaGroupProperties from "./components/Sayba Group/SaybaGroupProperties";
 
 const App = () => {
   return (
@@ -26,6 +27,10 @@ const App = () => {
             <Route path="/" element={<Home />} />
             {/*  */}
             <Route path="/saybagroup/form" element={<SaybaGroupForm />} />
+            <Route
+              path="/saybagroup/properties"
+              element={<SaybaGroupProperties />}
+            />
             {/*  */}
             <Route path="/delhidarbar/form" element={<DelhiDarbarForm />} />
             {/*  */}

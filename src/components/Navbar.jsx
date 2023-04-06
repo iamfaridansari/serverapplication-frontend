@@ -17,6 +17,9 @@ const Navbar = () => {
           <li onClick={closeMenu}>
             <NavLink to="/saybagroup/form">Form</NavLink>
           </li>
+          <li onClick={closeMenu}>
+            <NavLink to="/saybagroup/properties">Properties</NavLink>
+          </li>
           <hr />
           <p>Delhi darbar</p>
           <li onClick={closeMenu}>

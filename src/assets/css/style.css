@@ -49,6 +49,9 @@ svg {
 a:hover {
   color: unset;
 }
+label {
+  margin-bottom: 5px;
+}
 .button {
   background: #000;
   border-radius: 5px;
