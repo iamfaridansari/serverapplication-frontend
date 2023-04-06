@@ -5,7 +5,7 @@ import ToggleMenu from "../ToggleMenu";
 const SaybaGroupForm = () => {
   const [messages, setMessages] = useState([]);
   const fetchMessages = async () => {
-    const res = await fetch("/api/get/sayba/form");
+    const res = await fetch("http://localhost:3001/api/get/sayba/form");
     const data = await res.json();
     console.log(data);
     //
@@ -18,7 +18,7 @@ const SaybaGroupForm = () => {
   }, []);
   //
   const deleteMessage = async (id) => {
-    const res = await fetch("/api/delete/sayba/form", {
+    const res = await fetch("http://localhost:3001/api/delete/sayba/form", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
