@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/serverapplication-frontend/static/css/main.9b1e7646.css",
+    "main.js": "/serverapplication-frontend/static/js/main.9a10c1cc.js",
+    "static/media/Inter.ttf": "/serverapplication-frontend/static/media/Inter.b559a93b35af397f4b6f.ttf",
+    "index.html": "/serverapplication-frontend/index.html",
+    "main.9b1e7646.css.map": "/serverapplication-frontend/static/css/main.9b1e7646.css.map",
+    "main.9a10c1cc.js.map": "/serverapplication-frontend/static/js/main.9a10c1cc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9b1e7646.css",
+    "static/js/main.9a10c1cc.js"
+  ]
+}
