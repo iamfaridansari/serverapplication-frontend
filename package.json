@@ -1,8 +1,8 @@
 {
-  "name": "serverapplication",
+  "name": "serverapplication-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://iamfaridansari.github.io/serverapplication",
+  "homepage": "https://iamfaridansari.github.io/serverapplication-frontend",
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
