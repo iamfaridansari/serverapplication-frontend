@@ -1,0 +1,44 @@
+@media screen and (max-width: 992px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+  .wrapper main {
+    padding: 10px;
+  }
+  .wrapper nav {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+  }
+  .wrapper nav.active {
+    left: 0;
+  }
+  .formgrid {
+    grid-template-columns: repeat(3,1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imagegrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .formgrid {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .imagegrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .formgrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .imagegrid {
+    grid-template-columns: 1fr;
+  }
+}

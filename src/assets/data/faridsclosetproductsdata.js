@@ -1,0 +1,45 @@
+export const color = [
+  "white",
+  "black",
+  "camflouge",
+  "beige",
+  "olive green",
+  "grey",
+  "red",
+  "blue",
+  "green",
+  "silver",
+];
+
+export const brand = [
+  "h&m",
+  "zara",
+  "adidas",
+  "hublot",
+  "nike",
+  "carhartt",
+  "new balance",
+  "converse",
+  "ssense",
+  "jack & jones",
+  "decathlon",
+  "Levis",
+  "dickies",
+  "jockey",
+];
+
+export const category = [
+  "tshirt",
+  "shirt",
+  "accessories",
+  "shoes",
+  "cargo",
+  "jeans",
+  "formals",
+  "tracksuit",
+  "innerwear",
+  "hoodie",
+  "sweatshirt",
+  "jacket",
+  "flipflop",
+];

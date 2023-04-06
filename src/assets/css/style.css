@@ -1,0 +1,167 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+  background: #fff;
+}
+img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter.ttf);
+}
+h1,
+h2,
+p,
+a,
+ul,
+li,
+label,
+input,
+button,
+textarea,
+select,
+option {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style-type: none;
+  color: #000;
+  font-family: "Inter" !important;
+}
+h1 {
+  font-size: 1.25rem;
+}
+svg {
+  font-size: 1.25rem;
+}
+a:hover {
+  color: unset;
+}
+.button {
+  background: #000;
+  border-radius: 5px;
+  color: #fff;
+  padding: 5px 10px;
+  position: relative;
+}
+.button::before {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  height: 40%;
+  background: #ffffff98;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  align-items: start;
+  justify-content: space-between;
+}
+.wrapper nav {
+  padding: 5px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid #eee;
+  transition: all 0.5s linear;
+  z-index: 9;
+}
+.wrapper main {
+  padding: 5px;
+}
+.navlinks p {
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 15px;
+}
+.navlinks li {
+  margin-bottom: 20px;
+}
+.navlinks a {
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: relative;
+}
+.navlinks a::before {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  height: 40%;
+  background: #ffffff98;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+.navlinks a.active {
+  background: #000;
+  color: #fff;
+}
+.formgrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+.imagegrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+.imagegrid .image {
+  height: 250px;
+  position: relative;
+}
+.imagegrid .image img {
+  height: 100%;
+}
+.imagegrid .image .desc {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #00000089;
+  opacity: 0;
+  transition: all 0.5s linear;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.imagegrid .image:hover .desc {
+  opacity: 1;
+}
+.imagegrid .image:hover .desc p {
+  color: #fff;
+}
