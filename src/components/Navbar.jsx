@@ -43,6 +43,9 @@ const Navbar = () => {
           <li onClick={closeMenu}>
             <NavLink to="/nightsuit/products">Products</NavLink>
           </li>
+          <li onClick={closeMenu}>
+            <NavLink to="/nightsuit/coupon">Coupon</NavLink>
+          </li>
           <hr />
           <p>Multistep Form</p>
           <li onClick={closeMenu}>

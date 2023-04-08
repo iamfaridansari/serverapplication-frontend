@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import ToggleMenu from "../ToggleMenu";
+import Loader from "../Loader";
 
 const KapbrosImages = () => {
   const { backendAPI } = useContext(AppContext);
   const [image, setImage] = useState("");
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   //
   const uploadImage = async (e) => {
     e.preventDefault();
@@ -30,11 +32,18 @@ const KapbrosImages = () => {
   };
   //
   const getkapbrosimages = async () => {
-    const res = await fetch(`${backendAPI}/api/get/kapbros/products`);
-    const data = await res.json();
-    console.log(data);
-    if (res.status === 200) {
-      setImages(data);
+    try {
+      setLoading(true);
+      const res = await fetch(`${backendAPI}/api/get/kapbros/products`);
+      const data = await res.json();
+      console.log(data);
+      if (res.status === 200) {
+        setLoading(false);
+        setImages(data);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -72,18 +81,27 @@ const KapbrosImages = () => {
           Upload
         </button>
       </form>
-      <div className="imagegrid mt-4">
-        {images.map((item, index) => {
-          return (
-            <img
-              src={`${backendAPI + "/" + item.image}`}
-              key={index}
-              onDoubleClick={() => deleteimage(item)}
-              alt=""
-            />
-          );
-        })}
-      </div>
+      <hr />
+      <>
+        {loading ? (
+          <Loader />
+        ) : images.length === 0 ? (
+          <p className="text-center">No record to show</p>
+        ) : (
+          <div className="imagegrid mt-4">
+            {images.map((item, index) => {
+              return (
+                <img
+                  src={`${backendAPI + "/" + item.image}`}
+                  key={index}
+                  onDoubleClick={() => deleteimage(item)}
+                  alt=""
+                />
+              );
+            })}
+          </div>
+        )}
+      </>
     </div>
   );
 };

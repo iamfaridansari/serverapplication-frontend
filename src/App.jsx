@@ -15,6 +15,7 @@ import DelhiDarbarForm from "./components/Delhi Darbar/DelhiDarbar";
 import { AppContextProvider } from "./context/AppContext";
 import MultistepForm from "./components/Multistep Form/MultistepForm";
 import SaybaGroupProperties from "./components/Sayba Group/SaybaGroupProperties";
+import NightSuitCoupon from "./components/Night Suit/NightSuitCoupon";
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
             />
             {/*  */}
             <Route path="/nightsuit/products" element={<NightSuitProducts />} />
+            <Route path="/nightsuit/coupon" element={<NightSuitCoupon />} />
             {/*  */}
             <Route path="/multistepform/form" element={<MultistepForm />} />
           </Routes>

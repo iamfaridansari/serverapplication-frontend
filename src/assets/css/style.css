@@ -58,6 +58,7 @@ label {
   color: #fff;
   padding: 5px 10px;
   position: relative;
+  outline: none;
 }
 .button::before {
   content: "";

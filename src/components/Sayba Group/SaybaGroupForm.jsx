@@ -2,17 +2,26 @@ import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
+import Loader from "../Loader";
 
 const SaybaGroupForm = () => {
   const { backendAPI } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const fetchMessages = async () => {
-    const res = await fetch(`${backendAPI}/api/get/sayba/form`);
-    const data = await res.json();
-    console.log(data);
-    //
-    if (res.status === 200) {
-      setMessages(data);
+    try {
+      setLoading(true);
+      const res = await fetch(`${backendAPI}/api/get/sayba/form`);
+      const data = await res.json();
+      console.log(data);
+      //
+      if (res.status === 200) {
+        setMessages(data);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -41,50 +50,58 @@ const SaybaGroupForm = () => {
         <h1>Sayba Group</h1>
         <ToggleMenu />
       </div>
-      {messages.map((item, index) => {
-        return (
-          <ul
-            className={`list-group ${
-              index === messages.length - 1 ? "" : "mb-2"
-            }`}
-            key={index}
-          >
-            <li className="list-group-item">
-              <div className="d-flex align-items-center justify-content-between gap-2">
-                <p>
-                  <span className="fw-bold">Name:</span> {item.name}
-                </p>
-                <button
-                  className="button"
-                  onClick={() => deleteMessage(item._id)}
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            </li>
-            <li className="list-group-item">
-              <p>
-                <span className="fw-bold">Email:</span> {item.email}
-              </p>
-            </li>
-            <li className="list-group-item">
-              <p>
-                <span className="fw-bold">Contact:</span> {item.mobile}
-              </p>
-            </li>
-            <li className="list-group-item">
-              <p>
-                <span className="fw-bold">Subject:</span> {item.subject}
-              </p>
-            </li>
-            <li className="list-group-item">
-              <p>
-                <span className="fw-bold">Query:</span> {item.query}
-              </p>
-            </li>
-          </ul>
-        );
-      })}
+      <>
+        {loading ? (
+          <Loader />
+        ) : messages.length === 0 ? (
+          <p className="text-center">No record to show</p>
+        ) : (
+          messages.map((item, index) => {
+            return (
+              <ul
+                className={`list-group ${
+                  index === messages.length - 1 ? "" : "mb-2"
+                }`}
+                key={index}
+              >
+                <li className="list-group-item">
+                  <div className="d-flex align-items-center justify-content-between gap-2">
+                    <p>
+                      <span className="fw-bold">Name:</span> {item.name}
+                    </p>
+                    <button
+                      className="button"
+                      onClick={() => deleteMessage(item._id)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </li>
+                <li className="list-group-item">
+                  <p>
+                    <span className="fw-bold">Email:</span> {item.email}
+                  </p>
+                </li>
+                <li className="list-group-item">
+                  <p>
+                    <span className="fw-bold">Contact:</span> {item.mobile}
+                  </p>
+                </li>
+                <li className="list-group-item">
+                  <p>
+                    <span className="fw-bold">Subject:</span> {item.subject}
+                  </p>
+                </li>
+                <li className="list-group-item">
+                  <p>
+                    <span className="fw-bold">Query:</span> {item.query}
+                  </p>
+                </li>
+              </ul>
+            );
+          })
+        )}
+      </>
     </div>
   );
 };

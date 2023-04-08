@@ -3,6 +3,7 @@ import { AppContext } from "../../context/AppContext";
 import { category, colors, fabric } from "../../assets/data/nightsuitdata";
 import { FaPen, FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
+import Loader from "../Loader";
 
 const NightSuitProducts = () => {
   const { backendAPI } = useContext(AppContext);
@@ -75,13 +76,20 @@ const NightSuitProducts = () => {
   };
   //
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const getProducts = async () => {
-    const res = await fetch(backendAPI + "/api/get/nightsuit/products");
-    const data = await res.json();
-    console.log(data);
-    //
-    if (res.status === 200) {
-      setProducts(data);
+    try {
+      setLoading(true);
+      const res = await fetch(backendAPI + "/api/get/nightsuit/products");
+      const data = await res.json();
+      console.log(data);
+      //
+      if (res.status === 200) {
+        setLoading(false);
+        setProducts(data);
+      }
+    } catch (error) {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -239,38 +247,51 @@ const NightSuitProducts = () => {
           </button>
         </div>
       </form>
-
-      <div className="imagegrid mt-4">
-        {products.map((item, index) => {
-          return (
-            <div className="image" key={index}>
-              <div className="desc p-2">
-                <div>
-                  <p>{item.name}</p>
-                  <p>{item.category}</p>
-                  <p>{item.mrp}</p>
-                  <p>{item.price}</p>
-                  <p>{item.color}</p>
-                  <p>{item.fabric}</p>
-                  <p>Images: {item.images.length}</p>
-                </div>
-                <div className="d-flex align-items-center justify-content-between gap-2">
-                  <button className="button w-50">
-                    <FaPen />
-                  </button>
-                  <button
-                    className="button w-50"
-                    onClick={() => deleteimage(item)}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </div>
-              <img src={`${backendAPI + "/" + item.images[0].path}`} alt="" />
-            </div>
-          );
-        })}
-      </div>
+      <hr />
+      <>
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="imagegrid mt-4">
+            {products.length === 0 ? (
+              <p className="text-center">No record to show</p>
+            ) : (
+              products.map((item, index) => {
+                return (
+                  <div className="image" key={index}>
+                    <div className="desc p-2">
+                      <div>
+                        <p>{item.name}</p>
+                        <p>{item.category}</p>
+                        <p>{item.mrp}</p>
+                        <p>{item.price}</p>
+                        <p>{item.color}</p>
+                        <p>{item.fabric}</p>
+                        <p>Images: {item.images.length}</p>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between gap-2">
+                        <button className="button w-50">
+                          <FaPen />
+                        </button>
+                        <button
+                          className="button w-50"
+                          onClick={() => deleteimage(item)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                    <img
+                      src={`${backendAPI + "/" + item.images[0].path}`}
+                      alt=""
+                    />
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+      </>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ToggleMenu from "../ToggleMenu";
 import { FaPen, FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 import states from "../../assets/data/states";
+import Loader from "../Loader";
 
 const SaybaGroupProperties = () => {
   const [property, setProperty] = useState({
@@ -157,15 +158,19 @@ const SaybaGroupProperties = () => {
   };
   //
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
   const fetchProperties = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/get/sayba/property");
       const data = await res.json();
       console.log(data);
       if (res.status === 200) {
         setProperties(data);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -430,38 +435,48 @@ const SaybaGroupProperties = () => {
         </div>
       </form>
 
-      <div className="imagegrid mt-4">
-        {properties.map((item, index) => {
-          return (
-            <div className="image" key={index}>
-              <div className="desc p-2">
-                <div>
-                  <p>{item.name}</p>
-                  <p>{item.developer}</p>
-                  <p>
-                    {item.city} {item.state}
-                  </p>
-                  <p>{item.possession}</p>
-                  <p>{item.price}</p>
-                  <p>Images: {item.images.length}</p>
-                </div>
-                <div className="d-flex align-items-center justify-content-between gap-2">
-                  <button className="button w-50">
-                    <FaPen />
-                  </button>
-                  <button
-                    className="button w-50"
-                    onClick={() => deleteProperty(item)}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </div>
-              <img src={`${item.images[0].path}`} alt="" />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {properties.length === 0 ? (
+            <p className="text-center">No record to show</p>
+          ) : (
+            <div className="imagegrid mt-4">
+              {properties.map((item, index) => {
+                return (
+                  <div className="image" key={index}>
+                    <div className="desc p-2">
+                      <div>
+                        <p>{item.name}</p>
+                        <p>{item.developer}</p>
+                        <p>
+                          {item.city} {item.state}
+                        </p>
+                        <p>{item.possession}</p>
+                        <p>{item.price}</p>
+                        <p>Images: {item.images.length}</p>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between gap-2">
+                        <button className="button w-50">
+                          <FaPen />
+                        </button>
+                        <button
+                          className="button w-50"
+                          onClick={() => deleteProperty(item)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                    <img src={`${item.images[0].path}`} alt="" />
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
