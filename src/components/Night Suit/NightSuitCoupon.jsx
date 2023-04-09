@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import ToggleMenu from "../ToggleMenu";
 import { FaTrash } from "react-icons/fa";
 import Loader from "../Loader";
 
 const NightSuitCoupon = () => {
+  const { backendAPI } = useContext(AppContext);
   const [coupon, setCoupon] = useState({
     name: "",
     discount: "",
@@ -21,7 +23,7 @@ const NightSuitCoupon = () => {
     e.preventDefault();
     const { name, discount, type } = coupon;
     try {
-      const res = await fetch("/api/post/nightsuit/coupon", {
+      const res = await fetch(backendAPI + "/api/post/nightsuit/coupon", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +51,7 @@ const NightSuitCoupon = () => {
   const fetchCoupon = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/get/nightsuit/coupon");
+      const res = await fetch(backendAPI + "/api/get/nightsuit/coupon");
       const data = await res.json();
       console.log(data);
       //
@@ -68,7 +70,7 @@ const NightSuitCoupon = () => {
   //
   const deleteCoupon = async (item) => {
     try {
-      const res = await fetch("/api/delete/nightsuit/coupon", {
+      const res = await fetch(backendAPI + "/api/delete/nightsuit/coupon", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

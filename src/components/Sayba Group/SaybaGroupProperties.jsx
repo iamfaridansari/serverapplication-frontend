@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import ToggleMenu from "../ToggleMenu";
 import { FaPen, FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 import states from "../../assets/data/states";
 import Loader from "../Loader";
 
 const SaybaGroupProperties = () => {
+  const { backendAPI } = useContext(AppContext);
   const [property, setProperty] = useState({
     name: "",
     developer: "",
@@ -133,7 +135,7 @@ const SaybaGroupProperties = () => {
     formData.append("image4", image4);
     //
     try {
-      const res = await fetch("/api/post/sayba/property", {
+      const res = await fetch(backendAPI + "/api/post/sayba/property", {
         method: "POST",
         body: formData,
       });
@@ -162,7 +164,7 @@ const SaybaGroupProperties = () => {
   const fetchProperties = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/get/sayba/property");
+      const res = await fetch(backendAPI + "/api/get/sayba/property");
       const data = await res.json();
       console.log(data);
       if (res.status === 200) {
@@ -179,7 +181,7 @@ const SaybaGroupProperties = () => {
   }, []);
   //
   const deleteProperty = async (item) => {
-    const res = await fetch("/api/delete/sayba/property", {
+    const res = await fetch(backendAPI + "/api/delete/sayba/property", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
