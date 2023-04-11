@@ -2,9 +2,32 @@ import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import ToggleMenu from "../ToggleMenu";
 import Loader from "../Loader";
+import { useNavigate } from "react-router-dom";
 
 const KapbrosImages = () => {
   const { backendAPI } = useContext(AppContext);
+  //
+  const navigate = useNavigate();
+  const auth = async () => {
+    const authtoken = JSON.parse(localStorage.getItem("auth-token"));
+    try {
+      const res = await fetch(backendAPI + `/auth`, {
+        method: "GET",
+        headers: {
+          "auth-token": `Bearer ${authtoken}`,
+        },
+      });
+      if (res.status !== 200) {
+        navigate("/login", { replace: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    auth();
+  }, []);
+  //
   const [image, setImage] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);

@@ -3,20 +3,49 @@ import { AppContext } from "../../context/AppContext";
 import { FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 import Loader from "../Loader";
+import { useNavigate } from "react-router-dom";
 
 const SaybaGroupForm = () => {
   const { backendAPI } = useContext(AppContext);
+  //
+  const navigate = useNavigate();
+  const auth = async () => {
+    const authtoken = JSON.parse(localStorage.getItem("auth-token"));
+    try {
+      const res = await fetch(backendAPI + `/auth`, {
+        method: "GET",
+        headers: {
+          "auth-token": `Bearer ${authtoken}`,
+        },
+      });
+      if (res.status !== 200) {
+        navigate("/login", { replace: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    auth();
+  }, []);
+  //
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const fetchMessages = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${backendAPI}/api/get/sayba/form`);
+      const res = await fetch(backendAPI + `/api/get/sayba/form`, {
+        method: "GET",
+      });
       const data = await res.json();
       console.log(data);
       //
       if (res.status === 200) {
         setMessages(data);
+        setLoading(false);
+      } else if (res.status === 422) {
+        setLoading(false);
+      } else if (res.status === 500) {
         setLoading(false);
       }
     } catch (error) {

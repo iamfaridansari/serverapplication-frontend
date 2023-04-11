@@ -4,9 +4,32 @@ import ToggleMenu from "../ToggleMenu";
 import { FaPen, FaPlus, FaTimes, FaTrash } from "react-icons/fa";
 import states from "../../assets/data/states";
 import Loader from "../Loader";
+import { useNavigate } from "react-router-dom";
 
 const SaybaGroupProperties = () => {
   const { backendAPI } = useContext(AppContext);
+  //
+  const navigate = useNavigate();
+  const auth = async () => {
+    const authtoken = JSON.parse(localStorage.getItem("auth-token"));
+    try {
+      const res = await fetch(backendAPI + `/auth`, {
+        method: "GET",
+        headers: {
+          "auth-token": `Bearer ${authtoken}`,
+        },
+      });
+      if (res.status !== 200) {
+        navigate("/login", { replace: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    auth();
+  }, []);
+  //
   const [property, setProperty] = useState({
     name: "",
     developer: "",
@@ -472,7 +495,7 @@ const SaybaGroupProperties = () => {
                       </div>
                     </div>
                     <img
-                      src={`${item.images[0].path}`}
+                      src={`${backendAPI + "/" + item.images[0].path}`}
                       alt=""
                     />
                   </div>

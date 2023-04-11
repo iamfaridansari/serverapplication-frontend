@@ -1,17 +1,24 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { setMenu, navbar } = useContext(AppContext);
   const closeMenu = () => {
     navbar.current.classList.remove("active");
     setMenu(false);
   };
+  //
+  const login = () => {
+    navigate("/login", { replace: true });
+  };
   return (
     <>
       <nav ref={navbar}>
-        <h1 className="mb-4 mt-2">Server Application</h1>
+        <Link to="/" onDoubleClick={login} style={{ cursor: "pointer" }}>
+          <h1 className="mb-4 mt-2 fw-bold">Server Application</h1>
+        </Link>
         <ul className="navlinks">
           <p>Sayba Group</p>
           <li onClick={closeMenu}>
@@ -27,9 +34,6 @@ const Navbar = () => {
           </li>
           <hr />
           <p>Kapbros</p>
-          <li onClick={closeMenu}>
-            <NavLink to="/kapbros/form">Form</NavLink>
-          </li>
           <li onClick={closeMenu}>
             <NavLink to="/kapbros/gallery">Gallery</NavLink>
           </li>

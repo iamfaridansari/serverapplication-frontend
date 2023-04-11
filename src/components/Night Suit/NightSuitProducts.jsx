@@ -4,9 +4,32 @@ import { category, colors, fabric } from "../../assets/data/nightsuitdata";
 import { FaPen, FaTrash } from "react-icons/fa";
 import ToggleMenu from "../ToggleMenu";
 import Loader from "../Loader";
+import { useNavigate } from "react-router-dom";
 
 const NightSuitProducts = () => {
   const { backendAPI } = useContext(AppContext);
+  //
+  const navigate = useNavigate();
+  const auth = async () => {
+    const authtoken = JSON.parse(localStorage.getItem("auth-token"));
+    try {
+      const res = await fetch(backendAPI +`/auth`, {
+        method: "GET",
+        headers: {
+          "auth-token": `Bearer ${authtoken}`,
+        },
+      });
+      if (res.status !== 200) {
+        navigate("/login", { replace: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    auth();
+  }, []);
+  //
   const [product, setProduct] = useState({
     name: "",
     category: "",

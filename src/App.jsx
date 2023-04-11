@@ -6,7 +6,6 @@ import "./assets/css/responsive.css";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import KapbrosForm from "./components/Kapbros/KapbrosForm";
 import KapbrosImages from "./components/Kapbros/KapbrosImages";
 import FaridsClosetProducts from "./components/Farids closet/FaridsClosetProducts";
 import NightSuitProducts from "./components/Night Suit/NightSuitProducts";
@@ -16,6 +15,7 @@ import { AppContextProvider } from "./context/AppContext";
 import MultistepForm from "./components/Multistep Form/MultistepForm";
 import SaybaGroupProperties from "./components/Sayba Group/SaybaGroupProperties";
 import NightSuitCoupon from "./components/Night Suit/NightSuitCoupon";
+import Login from "./components/Login";
 
 const App = () => {
   return (
@@ -35,7 +35,6 @@ const App = () => {
             {/*  */}
             <Route path="/delhidarbar/form" element={<DelhiDarbarForm />} />
             {/*  */}
-            <Route path="/kapbros/form" element={<KapbrosForm />} />
             <Route path="/kapbros/gallery" element={<KapbrosImages />} />
             {/*  */}
             <Route
@@ -47,6 +46,8 @@ const App = () => {
             <Route path="/nightsuit/coupon" element={<NightSuitCoupon />} />
             {/*  */}
             <Route path="/multistepform/form" element={<MultistepForm />} />
+            {/*  */}
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
       </div>
