@@ -471,7 +471,10 @@ const SaybaGroupProperties = () => {
                         </button>
                       </div>
                     </div>
-                    <img src={`${item.images[0].path}`} alt="" />
+                    <img
+                      src={`${item.images[0].path}`}
+                      alt=""
+                    />
                   </div>
                 );
               })}
