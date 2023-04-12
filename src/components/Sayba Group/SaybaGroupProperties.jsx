@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import ToggleMenu from "../ToggleMenu";
 import { FaPen, FaPlus, FaTimes, FaTrash } from "react-icons/fa";
-import states from "../../assets/data/states";
 import Loader from "../Loader";
 import { useNavigate } from "react-router-dom";
 
@@ -32,12 +31,12 @@ const SaybaGroupProperties = () => {
   //
   const [property, setProperty] = useState({
     name: "",
-    developer: "",
     city: "",
-    state: "",
+    location: "",
+    address: "",
     possession: "",
     price: "",
-    classname: "",
+    desc: "",
   });
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -46,20 +45,6 @@ const SaybaGroupProperties = () => {
       [name]: value,
     });
   };
-  //
-  const cityInput = useRef(null);
-  const [stateIndex, setStateIndex] = useState(0);
-  useEffect(() => {
-    states.forEach((item, index) => {
-      if (item.state === property.state) {
-        setStateIndex(index);
-      }
-    });
-    //
-    property.state === ""
-      ? cityInput.current.setAttribute("disabled", true)
-      : cityInput.current.removeAttribute("disabled");
-  }, [property.state]);
   //
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
@@ -143,12 +128,12 @@ const SaybaGroupProperties = () => {
     //
     const formData = new FormData();
     formData.append("name", property.name);
-    formData.append("developer", property.developer);
-    formData.append("state", property.state);
     formData.append("city", property.city);
+    formData.append("location", property.location);
+    formData.append("address", property.address);
     formData.append("possession", property.possession);
     formData.append("price", property.price);
-    formData.append("classname", property.classname);
+    formData.append("desc", property.desc);
     formData.append("amenities", JSON.stringify(amenities));
     formData.append("area", JSON.stringify(area));
     formData.append("config", JSON.stringify(config));
@@ -167,15 +152,15 @@ const SaybaGroupProperties = () => {
       //
       if (res.status === 200) {
         fetchProperties();
-        setProperty({
-          name: "",
-          developer: "",
-          city: "",
-          state: "",
-          possession: "",
-          price: "",
-          classname: "",
-        });
+        // setProperty({
+        //   name: "",
+        //   city: "",
+        //   location: "",
+        //   address: "",
+        //   possession: "",
+        //   price: "",
+        //   desc: "",
+        // });
       }
     } catch (error) {
       console.log(error);
@@ -235,52 +220,34 @@ const SaybaGroupProperties = () => {
             onChange={handleInput}
           />
         </div>
-        <div className="col-sm-6 mb-4">
-          <label>Developer</label>
-          <input
-            type="text"
-            className="form-control"
-            name="developer"
-            value={property.developer}
-            onChange={handleInput}
-          />
-        </div>
-        <div className="col-sm-3 mb-4">
-          <label>State</label>
-          <select
-            className="form-control"
-            name="state"
-            value={property.state}
-            onChange={handleInput}
-          >
-            <option disabled value=""></option>
-            {states.map((item, index) => {
-              return (
-                <option value={item.state} key={index}>
-                  {item.state}
-                </option>
-              );
-            })}
-          </select>
-        </div>
         <div className="col-sm-3 mb-4">
           <label>City</label>
-          <select
-            className="form-control"
-            ref={cityInput}
+          <input
+            type="text"
             name="city"
             value={property.city}
             onChange={handleInput}
-          >
-            <option disabled value=""></option>
-            {states[stateIndex].districts.map((item, index) => {
-              return (
-                <option value={item} key={index}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
+            className="form-control"
+          />
+        </div>
+        <div className="col-sm-3 mb-4">
+          <label>Location</label>
+          <input
+            type="text"
+            name="location"
+            value={property.location}
+            onChange={handleInput}
+            className="form-control"
+          />
+        </div>
+        <div className="col-12 mb-4">
+          <label>Address</label>
+          <textarea
+            className="form-control"
+            name="address"
+            value={property.address}
+            onChange={handleInput}
+          ></textarea>
         </div>
         <div className="col-sm-6 mb-4">
           <label>Posession</label>
@@ -301,19 +268,6 @@ const SaybaGroupProperties = () => {
             value={property.price}
             onChange={handleInput}
           />
-        </div>
-        <div className="col-sm-6 mb-4">
-          <label>Class</label>
-          <select
-            className="form-control"
-            name="classname"
-            value={property.class}
-            onChange={handleInput}
-          >
-            <option disabled value=""></option>
-            <option value="short">Short</option>
-            <option value="long">Long</option>
-          </select>
         </div>
         <div className="col-md-3 col-6 mb-4">
           <label>Image1</label>
@@ -346,6 +300,15 @@ const SaybaGroupProperties = () => {
             className="form-control"
             onChange={(e) => setImage4(e.target.files[0])}
           />
+        </div>
+        <div className="col-12 mb-4">
+          <label>Desciption</label>
+          <textarea
+            className="form-control"
+            name="desc"
+            value={property.desc}
+            onChange={handleInput}
+          ></textarea>
         </div>
         <div className="col-12">
           <label>Amenities</label>
