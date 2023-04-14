@@ -75,7 +75,7 @@ const KapbrosImages = () => {
   //
   const deleteimage = async (item) => {
     const res = await fetch(`${backendAPI}/api/delete/kapbros/products`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
