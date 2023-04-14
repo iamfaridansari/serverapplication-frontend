@@ -17,7 +17,7 @@ const FaridsClosetProducts = () => {
   const auth = async () => {
     const authtoken = JSON.parse(localStorage.getItem("auth-token"));
     try {
-      const res = await fetch(backendAPI + `/auth`, {
+      const res = await fetch(backendAPI + `/api/auth`, {
         method: "GET",
         headers: {
           "auth-token": `Bearer ${authtoken}`,
