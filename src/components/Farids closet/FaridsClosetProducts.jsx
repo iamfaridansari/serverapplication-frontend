@@ -136,6 +136,30 @@ const FaridsClosetProducts = () => {
     console.log(data);
     getfaridsclosetproducts();
   };
+  //
+  const [edit, setEdit] = useState(false);
+  const editproduct = (item) => {
+    setProduct({
+      name: item.name,
+      price: item.price,
+      color: item.color,
+      brand: item.brand,
+      category: item.category,
+    });
+    setEdit(true);
+    window.scrollTo(0, 0);
+  };
+  //
+  const cancelEdit = () => {
+    setProduct({
+      name: "",
+      price: "",
+      color: "",
+      brand: "",
+      category: "",
+    });
+    setEdit(false);
+  };
   return (
     <div className="container-fluid p-lg-2 p-0">
       <div className="d-flex align-items-center justify-content-between gap-2 mb-4">
@@ -245,9 +269,18 @@ const FaridsClosetProducts = () => {
           </div>
         </div>
         <div className="d-flex align-items-center justify-content-end gap-2 mt-4">
-          <button className="button" onClick={addProduct}>
-            Save
-          </button>
+          {edit ? (
+            <div className="d-flex align-items-center justify-content-between gap-2">
+              <button className="button" onClick={cancelEdit}>
+                Cancel
+              </button>
+              <button className="button">Save</button>
+            </div>
+          ) : (
+            <button className="button" onClick={addProduct}>
+              Save
+            </button>
+          )}
         </div>
       </form>
 
@@ -273,7 +306,10 @@ const FaridsClosetProducts = () => {
                         <p>{item.color}</p>
                       </div>
                       <div className="d-flex align-items-center justify-content-between gap-2">
-                        <button className="button w-50">
+                        <button
+                          className="button w-50"
+                          onClick={() => editproduct(item)}
+                        >
                           <FaPen />
                         </button>
                         <button
